@@ -101,17 +101,31 @@ float4 PS_Display(float4 pos : SV_Position, float2 uv : TEXCOORD0) : SV_Target
         int label[] = { __F, __P, __S, __Colon, __Space };
         int label2[] = { __T, __a, __r, __g, __e, __t, __Colon, __Space };
 
+        // FPS Shadow
         DrawText_String(DrawText_Shift(float2(5, 5), int2(0, 0), 32, 1), 32, 1, uv, label, 5, res);
+        output.rgb = lerp(output.rgb, float3(0, 0, 0), res); res = 0.0;
+        DrawText_Digit(DrawText_Shift(float2(131, 5), int2(0, 0), 32, 1), 32, 1, uv, 2, smoothedFPS, res);
+        output.rgb = lerp(output.rgb, float3(0, 0, 0), res); res = 0.0;
+
+        // True FPS
+        DrawText_String(DrawText_Shift(float2(5, 3), int2(0, 0), 32, 1), 32, 1, uv, label, 5, res);
         output.rgb = lerp(output.rgb, float3(1, 1, 1), res); res = 0.0;
-        DrawText_Digit(DrawText_Shift(float2(116, 7), int2(0, 0), 32, 1), 32, 1, uv, 2, smoothedFPS, res);
+        DrawText_Digit(DrawText_Shift(float2(131, 3), int2(0, 0), 32, 1), 32, 1, uv, 2, smoothedFPS, res);
         output.rgb = lerp(output.rgb, float3(1, 1, 1), res); res = 0.0;
 
+        // Shader State
         if(smoothedTime > thresholdMS) {
             int label[] = { __D, __i, __s, __a, __b, __l, __e, __d };
+            DrawText_String(DrawText_Shift(float2(5, 40), int2(0, 0), 32, 1), 32, 1, uv, label, 8, res);
+            output.rgb = lerp(output.rgb, float3(0, 0, 0), res); res = 0.0;
+
             DrawText_String(DrawText_Shift(float2(5, 38), int2(0, 0), 32, 1), 32, 1, uv, label, 8, res);
             output.rgb = lerp(output.rgb, float3(1, 0, 0), res); res = 0.0;
         } else {
             int label[] = { __E, __n, __a, __b, __l, __e, __d };
+            DrawText_String(DrawText_Shift(float2(5, 40), int2(0, 0), 32, 1), 32, 1, uv, label, 7, res);
+            output.rgb = lerp(output.rgb, float3(0, 0, 0), res); res = 0.0;
+
             DrawText_String(DrawText_Shift(float2(5, 38), int2(0, 0), 32, 1), 32, 1, uv, label, 7, res);
             output.rgb = lerp(output.rgb, float3(0, 1, 0), res); res = 0.0;
         }
